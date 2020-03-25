@@ -83,9 +83,13 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+      if(empty($post)) {
+           abort('404');
+       }
+
+       return view('posts.edit', compact('post'));
     }
 
     /**
@@ -97,7 +101,18 @@ class PostController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+      $post = Post::find($id);
+     if(empty($post)) {
+         abort('404');
+     }
+
+     $data = $request->all();
+     $request->validate($this->validationPost);
+     $updated = $post->update($data);
+     if ($updated) {
+         $post = Post::find($id);
+         return redirect()->route('posts.show', compact('post'));
+     }
     }
 
     /**
