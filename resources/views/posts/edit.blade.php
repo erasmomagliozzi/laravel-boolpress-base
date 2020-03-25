@@ -46,6 +46,11 @@
       <button type="submit" name="button">
           Modifica
       </button>
+      <form action="{{route('posts.destroy', $post->id)}}" method="POST">
+          @csrf
+          @method('DELETE')
+          <button type="submit">DELETE</button>
+        </form>
   </form>
 
   </body>
