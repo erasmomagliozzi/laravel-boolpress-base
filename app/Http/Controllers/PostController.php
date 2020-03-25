@@ -51,7 +51,7 @@ class PostController extends Controller
       $newPost = new Post;
       $newPost->fill($data);
       $saved = $newPost->save();
-      dd($saved);
+
 
       if ($saved) {
          // $shoe = Shoe::orderBy('id','desc')->first();
@@ -68,9 +68,13 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        //
+      if(empty($post)) {
+           abort('404');
+       }
+
+       return view('posts.show', compact('post'));
     }
 
     /**
